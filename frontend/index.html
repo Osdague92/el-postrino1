@@ -1,0 +1,151 @@
+!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>El Postrino - Historias que Endulzan</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400..700;1,400..700&family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <!-- Enlace a su hoja de estilos específica -->
+         <link rel="stylesheet" href="common.css">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <header>
+        <nav>
+            <a href="#" class="logo">El Postrino</a>
+            <ul>
+                <li><a href="#postres">Postres</a></li>
+                <li><a href="#registro">Comunidad</a></li>
+                <li><a href="#">Historia</a></li>
+            </ul>
+            <div class="cart-icon" id="cartIcon">
+                <i class="fas fa-shopping-cart"></i>
+                <span id="cart-count">0</span>
+            </div>
+        </nav>
+    </header>
+
+    <main>
+        <section id="hero">
+            <div class="slider-container">
+                <div class="slide active" style="background-image: url('./assets/images/postreportada.webp');"></div>
+                <div class="slide" style="background-image: url('./assets/images/tarjeta2.jpg');"></div>
+                <div class="slide" style="background-image: url('./assets/images/tarjeta3.webp');"></div>
+            </div>
+            <div class="hero-content">
+                <h1>Cada postre cuenta una historia.</h1>
+                <p>Descubre los sabores que nacen de la pasión y la tradición familiar.</p>
+                <a href="#postres" class="cta-button">Ver las historias</a>
+            </div>
+            <button class="slider-control prev" id="prevBtn">&#10094;</button>
+            <button class="slider-control next" id="nextBtn">&#10095;</button>
+            <div class="slider-dots">
+                <span class="dot active" data-slide="0"></span>
+                <span class="dot" data-slide="1"></span>
+                <span class="dot" data-slide="2"></span>
+            </div>
+        </section>
+
+        <section id="postres">
+            <h2>Nuestras Historias Dulces</h2>
+            <div class="postres-grid">
+                <div class="postre-card">
+                    <img src="./assets/images/postreportada.webp" alt="Tarta de Maracuyá">
+                    <div class="postre-info">
+                        <h3>Tarta de Maracuyá "Amanecer en el Caribe"</h3>
+                        <p>La historia de cómo un viaje a la costa inspiró la combinación perfecta entre lo ácido y lo dulce.</p>
+                        <button class="customize-button" data-name="Tarta de Maracuyá" data-price="8.50">Armar mi postre</button>
+                    </div>
+                </div>
+                <div class="postre-card">
+                    <img src="./assets/images/tarjeta2.jpg" alt="Cheesecake de Frutos Rojos">
+                    <div class="postre-info">
+                        <h3>Cheesecake de Frutos Rojos "El Secreto de la Abuela"</h3>
+                        <p>Una receta familiar que ha pasado de generación en generación, guardando el sabor de los recuerdos.</p>
+                        <button class="customize-button" data-name="Cheesecake de Frutos Rojos" data-price="9.00">Armar mi postre</button>
+                    </div>
+                </div>
+                <div class="postre-card">
+                    <img src="./assets/images/tarjeta3.webp" alt="Mousse de Limón">
+                    <div class="postre-info">
+                        <h3>Mousse de Limón "Siesta de Verano"</h3>
+                        <p>Ligero, refrescante y espontáneo. Como esas tardes de verano que no quieres que terminen nunca.</p>
+                        <button class="customize-button" data-name="Mousse de Limón" data-price="7.50">Armar mi postre</button>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="game-section">
+            <h2>¿Listo para un desafío?</h2>
+            <p>¡Demuestra tus habilidades como chef en nuestra Fábrica de Postres!</p>
+            <a href="./juego/Juego2.html" class="game-button">Jugar a GamePostrino</a>
+        </section>
+
+        <section id="registro">
+            <div class="registro-container">
+                <h2>Únete a nuestra comunidad</h2>
+                <p>Regístrate para recibir noticias, recetas exclusivas y ser el primero en probar nuestras nuevas creaciones.</p>
+                <form>
+                    <input type="text" placeholder="Tu Nombre" required>
+                    <input type="email" placeholder="Tu Correo Electrónico" required>
+                    <input type="tel" placeholder="Tu Teléfono (Opcional)">
+                    <textarea placeholder="Déjanos un comentario..." rows="4"></textarea>
+                    <button type="submit" class="submit-button">Enviar</button>
+                </form>
+                <div class="divider"><span>o</span></div>
+                <button id="google-login" class="google-button">
+                    <img src="https://upload.wikimedia.org/wikipedia/commons/c/c1/Google_%22G%22_logo.svg" alt="Google Logo">
+                    Regístrate con Google
+                </button>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <p>&copy; 2024 El Postrino. Creada por Osdague.dev.</p>
+    </footer>
+
+    <!-- Modales -->
+    <div id="customization-modal" class="modal-overlay">
+        <div class="modal-content">
+            <button class="close-modal" id="close-custom-modal">&times;</button>
+            <h2 id="modal-product-name">Personaliza tu Postre</h2>
+            <div id="modal-options">
+                <p>Precio Base: $<span id="modal-base-price"></span></p>
+                <h4>Elige tus adicionales:</h4>
+                <label><input type="checkbox" name="adicional" value="1.50" data-text="Extra Fruta"> Extra Fruta (+$1.50)</label>
+                <label><input type="checkbox" name="adicional" value="2.00" data-text="Salsa de Chocolate Belga"> Salsa de Chocolate Belga (+$2.00)</label>
+                <label><input type="checkbox" name="adicional" value="1.00" data-text="Nueces Crocantes"> Nueces Crocantes (+$1.00)</label>
+                <label><input type="checkbox" name="adicional" value="2.50" data-text="Helado Artesanal"> Bola de Helado Artesanal (+$2.50)</label>
+            </div>
+            <div class="modal-footer">
+                <div class="quantity-selector">
+                    <label for="quantity">Cantidad:</label>
+                    <input type="number" id="quantity" value="1" min="1">
+                </div>
+                <h3>Total: $<span id="modal-total-price">0.00</span></h3>
+                <button id="add-to-cart-btn" class="cta-button">Añadir al Carrito</button>
+            </div>
+        </div>
+    </div>
+    <div id="cart-modal" class="modal-overlay">
+        <div class="modal-content cart-modal-content">
+            <button class="close-modal" id="close-cart-modal">&times;</button>
+            <h2>Tu Pedido</h2>
+            <div id="cart-items-container"><p>Tu carrito está vacío.</p></div>
+            <div class="cart-footer">
+                <h3>Total del Pedido: $<span id="cart-total">0.00</span></h3>
+                <button class="cta-button">Finalizar Pedido</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Enlace a su script específico -->
+    <script src="script.js"></script>
+</body>
+</html>

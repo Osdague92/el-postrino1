@@ -1,0 +1,845 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>El Postrino - Fábrica de Postres</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Comic Sans MS', cursive, sans-serif;
+            background: linear-gradient(135deg, #fddb93 0%, #60280c 100%);
+            min-height: 100vh;
+            overflow-x: hidden;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 30px;
+            background: rgba(255, 255, 255, 0.9);
+            padding: 20px;
+            border-radius: 20px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            backdrop-filter: blur(10px);
+        }
+
+        .title {
+            font-size: 3em;
+            color: #60280c;
+            text-shadow: 3px 3px 0px #fddb93;
+            margin-bottom: 10px;
+            animation: bounce 2s infinite alternate;
+        }
+
+        @keyframes bounce {
+            0% { transform: translateY(0px); }
+            100% { transform: translateY(-10px); }
+        }
+
+        .subtitle {
+            font-size: 1.2em;
+            color: #60280c;
+            margin-bottom: 20px;
+        }
+
+        .game-stats {
+            display: flex;
+            justify-content: space-around;
+            margin-bottom: 20px;
+            flex-wrap: wrap;
+        }
+
+        .stat {
+            background: linear-gradient(145deg, #60280c, #4a1f09);
+            color: #fddb93;
+            padding: 10px 20px;
+            border-radius: 25px;
+            font-weight: bold;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+            margin: 5px;
+            transform: scale(1);
+            transition: transform 0.3s ease;
+        }
+
+        .stat:hover {
+            transform: scale(1.05);
+        }
+
+        .game-area {
+            display: grid;
+            grid-template-columns: 1fr 2fr 1fr;
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+
+        .panel {
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 20px;
+            padding: 20px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            backdrop-filter: blur(10px);
+        }
+
+        .panel h3 {
+            color: #60280c;
+            margin-bottom: 15px;
+            text-align: center;
+            font-size: 1.5em;
+        }
+
+        .order-display {
+            background: linear-gradient(145deg, #fddb93, #f5cc7a);
+            border-radius: 15px;
+            padding: 20px;
+            margin-bottom: 15px;
+            border: 3px solid #60280c;
+            min-height: 200px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .order-display::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: repeating-linear-gradient(
+                45deg,
+                transparent,
+                transparent 10px,
+                rgba(255, 255, 255, 0.1) 10px,
+                rgba(255, 255, 255, 0.1) 20px
+            );
+            animation: shine 3s linear infinite;
+        }
+
+        @keyframes shine {
+            0% { transform: translateX(-100%) translateY(-100%) rotate(45deg); }
+            100% { transform: translateX(100%) translateY(100%) rotate(45deg); }
+        }
+
+        .order-item {
+            background: rgba(255, 255, 255, 0.9);
+            padding: 10px;
+            margin: 5px 0;
+            border-radius: 10px;
+            border-left: 4px solid #60280c;
+            position: relative;
+            z-index: 2;
+        }
+
+        .ingredients-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
+            gap: 10px;
+        }
+
+        .ingredient {
+            background: linear-gradient(145deg, #60280c, #4a1f09);
+            color: #fddb93;
+            padding: 15px 10px;
+            border-radius: 15px;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            border: none;
+            font-size: 0.9em;
+            font-weight: bold;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .ingredient::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 0;
+            height: 0;
+            background: rgba(255, 255, 255, 0.3);
+            border-radius: 50%;
+            transform: translate(-50%, -50%);
+            transition: width 0.3s ease, height 0.3s ease;
+        }
+
+        .ingredient:hover::before {
+            width: 100%;
+            height: 100%;
+        }
+
+        .ingredient:hover {
+            transform: translateY(-5px) scale(1.05);
+        }
+
+        .ingredient:active {
+            transform: translateY(0) scale(0.95);
+        }
+
+        .dessert-builder {
+            min-height: 300px;
+            background: linear-gradient(145deg, #fddb93, #f5cc7a);
+            border-radius: 20px;
+            padding: 20px;
+            position: relative;
+            overflow: hidden;
+            border: 2px solid #60280c;
+        }
+
+        .dessert-builder::before {
+            content: '🍰';
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            font-size: 2em;
+            opacity: 0.3;
+        }
+
+        .dessert-layer {
+            background: rgba(255, 255, 255, 0.9);
+            margin: 5px 0;
+            padding: 10px;
+            border-radius: 10px;
+            animation: slideIn 0.5s ease-in-out;
+            border-left: 4px solid #60280c;
+        }
+
+        @keyframes slideIn {
+            from {
+                opacity: 0;
+                transform: translateX(-20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+
+        .action-buttons {
+            display: flex;
+            gap: 10px;
+            margin-top: 20px;
+            flex-wrap: wrap;
+        }
+
+        .btn {
+            padding: 12px 24px;
+            border: none;
+            border-radius: 25px;
+            font-size: 1em;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+            flex: 1;
+            min-width: 120px;
+        }
+
+        .btn-primary {
+            background: linear-gradient(145deg, #60280c, #4a1f09);
+            color: #fddb93;
+        }
+
+        .btn-secondary {
+            background: linear-gradient(145deg, #fddb93, #f5cc7a);
+            color: #60280c;
+        }
+
+        .btn-success {
+            background: linear-gradient(145deg, #60280c, #4a1f09);
+            color: #fddb93;
+        }
+
+        .btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.3);
+        }
+
+        .btn:active {
+            transform: translateY(0);
+        }
+
+        .timer {
+            font-size: 1.5em;
+            color: #60280c;
+            font-weight: bold;
+            text-align: center;
+            margin: 10px 0;
+            animation: pulse 1s infinite;
+        }
+
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+            100% { transform: scale(1); }
+        }
+
+        .notification {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            padding: 15px 25px;
+            border-radius: 10px;
+            color: white;
+            font-weight: bold;
+            z-index: 1000;
+            transform: translateX(400px);
+            transition: transform 0.3s ease;
+        }
+
+        .notification.show {
+            transform: translateX(0);
+        }
+
+        .notification.success {
+            background: linear-gradient(145deg, #60280c, #4a1f09);
+            color: #fddb93;
+        }
+
+        .notification.error {
+            background: linear-gradient(145deg, #fddb93, #f5cc7a);
+            color: #60280c;
+        }
+
+        .leaderboard {
+            background: rgba(255, 255, 255, 0.9);
+            border-radius: 20px;
+            padding: 20px;
+            margin-top: 20px;
+        }
+
+        .leaderboard h3 {
+            color: #60280c;
+            margin-bottom: 15px;
+            text-align: center;
+        }
+
+        .score-item {
+            display: flex;
+            justify-content: space-between;
+            padding: 10px;
+            margin: 5px 0;
+            background: linear-gradient(145deg, #60280c, #4a1f09);
+            color: #fddb93;
+            border-radius: 10px;
+        }
+
+        @media (max-width: 768px) {
+            .game-area {
+                grid-template-columns: 1fr;
+                gap: 15px;
+            }
+            
+            .title {
+                font-size: 2em;
+            }
+            
+            .ingredients-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+            
+            .action-buttons {
+                flex-direction: column;
+            }
+        }
+
+        .game-over-modal {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.8);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 2000;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.3s ease;
+        }
+
+        .game-over-modal.show {
+            opacity: 1;
+            pointer-events: all;
+        }
+
+        .modal-content {
+            background: white;
+            padding: 40px;
+            border-radius: 20px;
+            text-align: center;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+            transform: scale(0.8);
+            transition: transform 0.3s ease;
+        }
+
+        .game-over-modal.show .modal-content {
+            transform: scale(1);
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1 class="title">🍰 El Postrino 🍰</h1>
+            <p class="subtitle">¡Fábrica de Postres Mágicos!</p>
+            <div class="game-stats">
+                <div class="stat">Puntuación: <span id="score">0</span></div>
+                <div class="stat">Nivel: <span id="level">1</span></div>
+                <div class="stat">Pedidos Completados: <span id="completed">0</span></div>
+                <div class="stat">Racha: <span id="streak">0</span></div>
+            </div>
+            <div class="timer" id="timer">Tiempo: 60s</div>
+        </div>
+
+        <div class="game-area">
+            <div class="panel">
+                <h3>📋 Pedido Actual</h3>
+                <div class="order-display" id="currentOrder">
+                    <div class="order-item">¡Presiona "Nuevo Pedido" para comenzar!</div>
+                </div>
+                <div class="action-buttons">
+                    <button class="btn btn-primary" id="newOrderBtn">🆕 Nuevo Pedido</button>
+                    <button class="btn btn-secondary" id="skipOrderBtn">⏭️ Saltar</button>
+                </div>
+            </div>
+
+            <div class="panel">
+                <h3>🛠️ Armador de Postres</h3>
+                <div class="dessert-builder" id="dessertBuilder">
+                    <div style="text-align: center; color: white; font-size: 1.2em; margin-top: 50px;">
+                        Selecciona ingredientes para armar tu postre
+                    </div>
+                </div>
+                <div class="action-buttons">
+                    <button class="btn btn-success" id="completeOrderBtn">✅ Completar Pedido</button>
+                    <button class="btn btn-secondary" id="clearBuilderBtn">🗑️ Limpiar</button>
+                </div>
+            </div>
+
+            <div class="panel">
+                <h3>🧪 Ingredientes</h3>
+                <div class="ingredients-grid" id="ingredientsGrid">
+                    <!-- Los ingredientes se cargarán dinámicamente -->
+                </div>
+            </div>
+        </div>
+
+        <div class="leaderboard">
+            <h3>🏆 Mejores Puntuaciones</h3>
+            <div id="leaderboardList">
+                <!-- Las puntuaciones se cargarán dinámicamente -->
+            </div>
+        </div>
+    </div>
+
+    <div class="notification" id="notification"></div>
+
+    <div class="game-over-modal" id="gameOverModal">
+        <div class="modal-content">
+            <h2 style="color: #60280c; margin-bottom: 20px;">🎉 ¡Juego Terminado! 🎉</h2>
+            <p style="font-size: 1.2em; margin-bottom: 10px;">Puntuación Final: <span id="finalScore">0</span></p>
+            <p style="font-size: 1.1em; margin-bottom: 10px;">Pedidos Completados: <span id="finalOrders">0</span></p>
+            <p style="font-size: 1.1em; margin-bottom: 20px;">Mejor Racha: <span id="finalStreak">0</span></p>
+            <button class="btn btn-primary" id="restartBtn">🔄 Jugar de Nuevo</button>
+        </div>
+    </div>
+
+    <script>
+        class ElPostrino {
+            constructor() {
+                this.score = 0;
+                this.level = 1;
+                this.completedOrders = 0;
+                this.streak = 0;
+                this.maxStreak = 0;
+                this.timeLeft = 60;
+                this.gameActive = false;
+                this.currentOrder = null;
+                this.currentDessert = [];
+                
+                this.ingredients = [
+                    'Bizcocho de Vainilla', 'Bizcocho de Chocolate', 'Bizcocho Red Velvet',
+                    'Crema Chantilly', 'Crema de Chocolate', 'Crema de Fresa',
+                    'Mermelada de Fresa', 'Dulce de Leche', 'Nutella',
+                    'Fresas Frescas', 'Bananas', 'Arándanos',
+                    'Chocolate Rallado', 'Coco Rallado', 'Almendras',
+                    'Cerezas', 'Galletas Oreo', 'Caramelo Líquido'
+                ];
+
+                this.orderTypes = [
+                    'Torta Clásica', 'Parfait', 'Tarta', 'Cupcake', 'Tiramisu'
+                ];
+
+                this.initializeGame();
+                this.bindEvents();
+                this.loadLeaderboard();
+            }
+
+            initializeGame() {
+                this.createIngredientsGrid();
+                this.updateDisplay();
+            }
+
+            bindEvents() {
+                document.getElementById('newOrderBtn').addEventListener('click', () => this.generateNewOrder());
+                document.getElementById('skipOrderBtn').addEventListener('click', () => this.skipOrder());
+                document.getElementById('completeOrderBtn').addEventListener('click', () => this.completeOrder());
+                document.getElementById('clearBuilderBtn').addEventListener('click', () => this.clearBuilder());
+                document.getElementById('restartBtn').addEventListener('click', () => this.restartGame());
+            }
+
+            createIngredientsGrid() {
+                const grid = document.getElementById('ingredientsGrid');
+                grid.innerHTML = '';
+                
+                this.ingredients.forEach(ingredient => {
+                    const btn = document.createElement('button');
+                    btn.className = 'ingredient';
+                    btn.textContent = ingredient;
+                    btn.addEventListener('click', () => this.addIngredient(ingredient));
+                    grid.appendChild(btn);
+                });
+            }
+
+            generateNewOrder() {
+                if (!this.gameActive) {
+                    this.startGame();
+                }
+
+                const orderType = this.orderTypes[Math.floor(Math.random() * this.orderTypes.length)];
+                const numIngredients = Math.min(3 + Math.floor(this.level / 2), 8);
+                const requiredIngredients = [];
+
+                // Seleccionar ingredientes aleatoriamente
+                const shuffledIngredients = [...this.ingredients].sort(() => 0.5 - Math.random());
+                for (let i = 0; i < numIngredients; i++) {
+                    requiredIngredients.push(shuffledIngredients[i]);
+                }
+
+                this.currentOrder = {
+                    type: orderType,
+                    ingredients: requiredIngredients,
+                    points: numIngredients * 10 + (this.level * 5)
+                };
+
+                this.displayCurrentOrder();
+                this.showNotification(`¡Nuevo pedido de ${orderType}!`, 'success');
+            }
+
+            displayCurrentOrder() {
+                const orderDisplay = document.getElementById('currentOrder');
+                if (!this.currentOrder) return;
+
+                let html = `
+                    <div class="order-item">
+                        <strong>🍰 ${this.currentOrder.type}</strong>
+                        <div style="margin-top: 10px;">
+                            <strong>Ingredientes requeridos:</strong>
+                        </div>
+                `;
+
+                this.currentOrder.ingredients.forEach(ingredient => {
+                    html += `<div style="margin: 5px 0; padding: 5px; background: rgba(116, 185, 255, 0.2); border-radius: 5px;">• ${ingredient}</div>`;
+                });
+
+                html += `<div style="margin-top: 10px; font-weight: bold; color: #60280c;">💰 Puntos: ${this.currentOrder.points}</div>`;
+                html += `</div>`;
+
+                orderDisplay.innerHTML = html;
+            }
+
+            addIngredient(ingredient) {
+                if (!this.gameActive) {
+                    this.showNotification('¡Presiona "Nuevo Pedido" para comenzar!', 'error');
+                    return;
+                }
+
+                this.currentDessert.push(ingredient);
+                this.updateDessertBuilder();
+                
+                // Efecto visual en el botón
+                const buttons = document.querySelectorAll('.ingredient');
+                buttons.forEach(btn => {
+                    if (btn.textContent === ingredient) {
+                        btn.style.transform = 'scale(0.9)';
+                        setTimeout(() => {
+                            btn.style.transform = '';
+                        }, 150);
+                    }
+                });
+            }
+
+            updateDessertBuilder() {
+                const builder = document.getElementById('dessertBuilder');
+                if (this.currentDessert.length === 0) {
+                    builder.innerHTML = `
+                        <div style="text-align: center; color: white; font-size: 1.2em; margin-top: 50px;">
+                            Selecciona ingredientes para armar tu postre
+                        </div>
+                    `;
+                    return;
+                }
+
+                let html = '<div style="color: #60280c; font-weight: bold; margin-bottom: 10px;">🍰 Tu Postre:</div>';
+                
+                this.currentDessert.forEach((ingredient, index) => {
+                    html += `
+                        <div class="dessert-layer">
+                            ${index + 1}. ${ingredient}
+                        </div>
+                    `;
+                });
+
+                builder.innerHTML = html;
+            }
+
+            completeOrder() {
+                if (!this.currentOrder || !this.gameActive) {
+                    this.showNotification('¡No hay pedido activo!', 'error');
+                    return;
+                }
+
+                if (this.currentDessert.length === 0) {
+                    this.showNotification('¡Tu postre está vacío!', 'error');
+                    return;
+                }
+
+                // Verificar si el pedido coincide exactamente
+                const isExactMatch = this.arraysEqual(
+                    this.currentOrder.ingredients.sort(),
+                    this.currentDessert.sort()
+                );
+
+                if (isExactMatch) {
+                    // Pedido perfecto
+                    this.score += this.currentOrder.points + (this.streak * 5);
+                    this.completedOrders++;
+                    this.streak++;
+                    this.maxStreak = Math.max(this.maxStreak, this.streak);
+                    this.showNotification(`¡Perfecto! +${this.currentOrder.points + (this.streak * 5)} puntos`, 'success');
+                } else {
+                    // Verificar ingredientes correctos
+                    const correctIngredients = this.currentDessert.filter(ing => 
+                        this.currentOrder.ingredients.includes(ing)
+                    ).length;
+                    
+                    const accuracy = correctIngredients / this.currentOrder.ingredients.length;
+                    
+                    if (accuracy >= 0.7) {
+                        // Pedido parcialmente correcto
+                        const points = Math.floor(this.currentOrder.points * accuracy);
+                        this.score += points;
+                        this.completedOrders++;
+                        this.streak = Math.floor(this.streak / 2); // Reducir racha
+                        this.showNotification(`¡Bien! +${points} puntos (${Math.floor(accuracy * 100)}% correcto)`, 'success');
+                    } else {
+                        // Pedido incorrecto
+                        this.streak = 0;
+                        this.showNotification(`¡Incorrecto! Solo ${Math.floor(accuracy * 100)}% correcto`, 'error');
+                    }
+                }
+
+                // Limpiar y preparar para el siguiente pedido
+                this.currentOrder = null;
+                this.currentDessert = [];
+                this.updateDessertBuilder();
+                
+                // Aumentar nivel cada 5 pedidos
+                if (this.completedOrders % 5 === 0) {
+                    this.level++;
+                    this.showNotification(`¡Nivel ${this.level} desbloqueado!`, 'success');
+                }
+
+                this.updateDisplay();
+                
+                // Limpiar la pantalla del pedido
+                document.getElementById('currentOrder').innerHTML = 
+                    '<div class="order-item">¡Presiona "Nuevo Pedido" para el siguiente!</div>';
+            }
+
+            skipOrder() {
+                if (!this.currentOrder || !this.gameActive) {
+                    this.showNotification('¡No hay pedido activo!', 'error');
+                    return;
+                }
+
+                this.streak = 0; // Resetear racha
+                this.currentOrder = null;
+                this.currentDessert = [];
+                this.updateDessertBuilder();
+                this.updateDisplay();
+                
+                document.getElementById('currentOrder').innerHTML = 
+                    '<div class="order-item">Pedido saltado. ¡Presiona "Nuevo Pedido"!</div>';
+                
+                this.showNotification('Pedido saltado', 'error');
+            }
+
+            clearBuilder() {
+                this.currentDessert = [];
+                this.updateDessertBuilder();
+                this.showNotification('Postre limpiado', 'success');
+            }
+
+            arraysEqual(a, b) {
+                return a.length === b.length && a.every((val, index) => val === b[index]);
+            }
+
+            startGame() {
+                this.gameActive = true;
+                this.startTimer();
+            }
+
+            startTimer() {
+                const timerInterval = setInterval(() => {
+                    this.timeLeft--;
+                    this.updateTimerDisplay();
+                    
+                    if (this.timeLeft <= 0) {
+                        clearInterval(timerInterval);
+                        this.endGame();
+                    }
+                }, 1000);
+            }
+
+            updateTimerDisplay() {
+                const timerElement = document.getElementById('timer');
+                timerElement.textContent = `Tiempo: ${this.timeLeft}s`;
+                
+                if (this.timeLeft <= 10) {
+                    timerElement.style.color = '#60280c';
+                    timerElement.style.animation = 'pulse 0.5s infinite';
+                } else {
+                    timerElement.style.color = '#60280c';
+                    timerElement.style.animation = 'pulse 1s infinite';
+                }
+            }
+
+            endGame() {
+                this.gameActive = false;
+                this.saveScore();
+                this.showGameOverModal();
+            }
+
+            showGameOverModal() {
+                document.getElementById('finalScore').textContent = this.score;
+                document.getElementById('finalOrders').textContent = this.completedOrders;
+                document.getElementById('finalStreak').textContent = this.maxStreak;
+                
+                const modal = document.getElementById('gameOverModal');
+                modal.classList.add('show');
+            }
+
+            restartGame() {
+                // Resetear todas las variables
+                this.score = 0;
+                this.level = 1;
+                this.completedOrders = 0;
+                this.streak = 0;
+                this.maxStreak = 0;
+                this.timeLeft = 60;
+                this.gameActive = false;
+                this.currentOrder = null;
+                this.currentDessert = [];
+                
+                // Cerrar modal
+                document.getElementById('gameOverModal').classList.remove('show');
+                
+                // Actualizar display
+                this.updateDisplay();
+                this.updateDessertBuilder();
+                document.getElementById('currentOrder').innerHTML = 
+                    '<div class="order-item">¡Presiona "Nuevo Pedido" para comenzar!</div>';
+                
+                // Resetear timer
+                document.getElementById('timer').textContent = 'Tiempo: 60s';
+                document.getElementById('timer').style.color = '#60280c';
+                document.getElementById('timer').style.animation = 'pulse 1s infinite';
+                
+                this.showNotification('¡Nuevo juego iniciado!', 'success');
+            }
+
+            updateDisplay() {
+                document.getElementById('score').textContent = this.score;
+                document.getElementById('level').textContent = this.level;
+                document.getElementById('completed').textContent = this.completedOrders;
+                document.getElementById('streak').textContent = this.streak;
+            }
+
+            saveScore() {
+                const scores = JSON.parse(localStorage.getItem('elPostrinoBestScores')) || [];
+                scores.push({
+                    score: this.score,
+                    orders: this.completedOrders,
+                    level: this.level,
+                    streak: this.maxStreak,
+                    date: new Date().toLocaleDateString()
+                });
+                
+                // Mantener solo los 5 mejores
+                scores.sort((a, b) => b.score - a.score);
+                scores.splice(5);
+                
+                localStorage.setItem('elPostrinoBestScores', JSON.stringify(scores));
+                this.loadLeaderboard();
+            }
+
+            loadLeaderboard() {
+                try {
+                    const scores = JSON.parse(localStorage.getItem('elPostrinoBestScores')) || [];
+                    const leaderboardList = document.getElementById('leaderboardList');
+                    
+                    if (scores.length === 0) {
+                        leaderboardList.innerHTML = '<div style="text-align: center; color: #666;">¡Aún no hay puntuaciones!</div>';
+                        return;
+                    }
+                    
+                    leaderboardList.innerHTML = scores.map((score, index) => `
+                        <div class="score-item">
+                            <span>${index + 1}. ${score.score} pts - Nivel ${score.level}</span>
+                            <span>${score.date}</span>
+                        </div>
+                    `).join('');
+                } catch (error) {
+                    // Si localStorage no está disponible, mostrar mensaje alternativo
+                    document.getElementById('leaderboardList').innerHTML = 
+                        '<div style="text-align: center; color: #666;">Puntuaciones no disponibles</div>';
+                }
+            }
+
+            showNotification(message, type) {
+                const notification = document.getElementById('notification');
+                notification.textContent = message;
+                notification.className = `notification ${type}`;
+                notification.classList.add('show');
+                
+                setTimeout(() => {
+                    notification.classList.remove('show');
+                }, 3000);
+            }
+        }
+
+        // Inicializar el juego cuando la página se carga
+        document.addEventListener('DOMContentLoaded', () => {
+            new ElPostrino();
+        });
+    </script>
+</body>
+</html>

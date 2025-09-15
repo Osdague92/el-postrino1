@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>El Postrino - Fábrica de Postres</title>
+    <link rel="stylesheet" href="../common.css">
+    <link rel="stylesheet" href="juego.css">
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1 class="title">🍰 El Postrino 🍰</h1>
+            <p class="subtitle">¡Fábrica de Postres Mágicos!</p>
+            <div class="game-stats">
+                <div class="stat">Puntuación: <span id="score">0</span></div>
+                <div class="stat">Nivel: <span id="level">1</span></div>
+                <div class="stat">Pedidos Completados: <span id="completed">0</span></div>
+                <div class="stat">Racha: <span id="streak">0</span></div>
+            </div>
+            <div class="timer" id="timer">Tiempo: 60s</div>
+        </div>
+
+        <div class="game-area">
+            <div class="panel">
+                <h3>📋 Pedido Actual</h3>
+                <div class="order-display" id="currentOrder">
+                    <div class="order-item">¡Presiona "Nuevo Pedido" para comenzar!</div>
+                </div>
+                <div class="action-buttons">
+                    <button class="btn btn-primary" id="newOrderBtn">🆕 Nuevo Pedido</button>
+                    <button class="btn btn-secondary" id="skipOrderBtn">⏭️ Saltar</button>
+                </div>
+            </div>
+
+            <div class="panel">
+                <h3>🛠️ Armador de Postres</h3>
+                <div class="dessert-builder" id="dessertBuilder">
+                    <div style="text-align: center; color: white; font-size: 1.2em; margin-top: 50px;">
+                        Selecciona ingredientes para armar tu postre
+                    </div>
+                </div>
+                <div class="action-buttons">
+                    <button class="btn btn-success" id="completeOrderBtn">✅ Completar Pedido</button>
+                    <button class="btn btn-secondary" id="clearBuilderBtn">🗑️ Limpiar</button>
+                </div>
+            </div>
+
+            <div class="panel">
+                <h3>🧪 Ingredientes</h3>
+                <div class="ingredients-grid" id="ingredientsGrid">
+                    <!-- Los ingredientes se cargarán dinámicamente -->
+                </div>
+            </div>
+        </div>
+
+        <div class="leaderboard">
+            <h3>🏆 Mejores Puntuaciones</h3>
+            <div id="leaderboardList">
+                <!-- Las puntuaciones se cargarán dinámicamente -->
+            </div>
+        </div>
+
+        <a href="../index.html" class="back-button">Volver al Inicio</a>
+    </div>
+
+    <div class="notification" id="notification"></div>
+
+    <div class="game-over-modal" id="gameOverModal">
+        <div class="modal-content">
+            <h2 style="color: #60280c; margin-bottom: 20px;">🎉 ¡Juego Terminado! 🎉</h2>
+            <p style="font-size: 1.2em; margin-bottom: 10px;">Puntuación Final: <span id="finalScore">0</span></p>
+            <p style="font-size: 1.1em; margin-bottom: 10px;">Pedidos Completados: <span id="finalOrders">0</span></p>
+            <p style="font-size: 1.1em; margin-bottom: 20px;">Mejor Racha: <span id="finalStreak">0</span></p>
+            <button class="btn btn-primary" id="restartBtn">🔄 Jugar de Nuevo</button>
+        </div>
+    </div>
+        <script src="Juego2.html"></script>
+</body>
+</html>
