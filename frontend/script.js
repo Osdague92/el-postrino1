@@ -4,6 +4,14 @@
 
 document.addEventListener('DOMContentLoaded', () => {
 
+    // --- FUNCIONALIDAD 0: NAVEGACIÓN MÓVIL ---
+    const hamburgerMenu = document.getElementById('hamburgerMenu');
+    const navUl = document.querySelector('nav ul');
+
+    hamburgerMenu.addEventListener('click', () => {
+        navUl.classList.toggle('show');
+    });
+
     // --- FUNCIONALIDAD 1: SLIDER AUTOMÁTICO PARA EL HERO ---
     const slides = document.querySelectorAll('.slide');
     const dots = document.querySelectorAll('.dot');
@@ -52,7 +60,41 @@ document.addEventListener('DOMContentLoaded', () => {
     }, { threshold: 0.1 });
     cards.forEach(card => observer.observe(card));
 
-    // --- FUNCIONALIDAD 3: Manejo del botón de Login con Google ---
+    // --- FUNCIONALIDAD 3: Manejo del formulario de registro ---
+    const registroForm = document.getElementById('registro-form');
+    const formMessages = document.getElementById('form-messages');
+    const submitButton = registroForm.querySelector('.submit-button');
+
+    registroForm.addEventListener('submit', (e) => {
+        e.preventDefault();
+        
+        // Show loading state
+        submitButton.textContent = 'Enviando...';
+        submitButton.classList.add('loading');
+        submitButton.disabled = true;
+        formMessages.innerHTML = '';
+
+        // Simulate API call
+        setTimeout(() => {
+            const randomSuccess = Math.random() > 0.5;
+
+            if (randomSuccess) {
+                formMessages.innerHTML = '<div class="success-message">¡Gracias por registrarte!</div>';
+                registroForm.reset();
+            } else {
+                formMessages.innerHTML = '<div class="error-message">Hubo un error. Por favor, inténtalo de nuevo.</div>';
+            }
+
+            // Restore button state
+            submitButton.textContent = 'Enviar';
+            submitButton.classList.remove('loading');
+            submitButton.disabled = false;
+
+        }, 2000);
+    });
+
+
+    // --- FUNCIONALIDAD 4: Manejo del botón de Login con Google ---
     const googleLoginButton = document.getElementById('google-login');
     if (googleLoginButton) {
         googleLoginButton.addEventListener('click', () => {
@@ -60,7 +102,7 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
-    // --- FUNCIONALIDAD 4: CARRITO DE COMPRAS ---
+    // --- FUNCIONALIDAD 5: CARRITO DE COMPRAS ---
     let cart = [];
     let currentProduct = {};
 
