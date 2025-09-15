@@ -1,58 +1,71 @@
-# El Postrino
+# el-postrino1
 
-A simple application for ordering custom desserts.
+Este proyecto es una aplicación web desarrollada con HTML, CSS y JavaScript.  
+Su objetivo principal es ofrecer una plataforma interactiva para compartir publicaciones y contenido.
 
-## Folder Structure
+## Características
 
+- Interfaz responsiva y atractiva.
+- Funcionalidad dinámica con JavaScript.
+- Estilos personalizados con CSS.
+- Fácil de modificar y expandir.
+- Uso de iconos para mejorar la experiencia visual.
+
+## Instalación
+
+1. Clona el repositorio:
+   ```bash
+   git clone https://github.com/Osdague92/el-postrino1.git
+   ```
+2. Abre el archivo `index.html` en tu navegador preferido.
+
+## Ejemplo de código
+
+A continuación se muestra un fragmento del código HTML con la integración de iconos usando [Font Awesome](https://fontawesome.com/):
+
+```html
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>el-postrino1</title>
+  <!-- Incluye Font Awesome desde CDN -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <header>
+    <h1><i class="fas fa-feather"></i> el-postrino1</h1>
+    <nav>
+      <a href="#"><i class="fas fa-home"></i> Inicio</a>
+      <a href="#"><i class="fas fa-user"></i> Perfil</a>
+      <a href="#"><i class="fas fa-envelope"></i> Mensajes</a>
+    </nav>
+  </header>
+  <main>
+    <section>
+      <h2><i class="fas fa-bullhorn"></i> Publicaciones</h2>
+      <!-- Más contenido aquí -->
+    </section>
+  </main>
+</body>
+</html>
 ```
-.el-postrino/
-├── backend/         # Node.js/Express backend
-│   ├── db/          # JSON files acting as a database
-│   ├── node_modules/
-│   ├── package.json
-│   └── server.js
-└── frontend/        # Vanilla JS frontend
-    ├── assets/
-    ├── index.html
-    ├── script.js
-    └── style.css
-```
 
-## Getting Started
+## Uso de iconos
 
-### Prerequisites
+Este proyecto utiliza iconos para mejorar la experiencia visual, como se muestra en el ejemplo anterior.  
+Puedes personalizarlos fácilmente cambiando las clases de los iconos (`fa-home`, `fa-user`, etc.) según tus necesidades.
 
-- Node.js and npm
+## Contribuciones
 
-### Installation
+¡Las contribuciones son bienvenidas!  
+Si deseas proponer mejoras, por favor abre un issue o crea un pull request.
 
-1.  **Backend:**
-    ```bash
-    cd backend
-    npm install
-    npm start
-    ```
+## Licencia
 
-2.  **Frontend:**
-    Open the `frontend/index.html` file in your browser.
+Este proyecto está bajo la licencia [MIT](LICENSE).
 
-## API Endpoints
+## Autor
 
-### Postres
-
--   `GET /postres`: Get a list of all available desserts.
-
-### Toppings
-
--   `GET /toppings`: Get a list of all available toppings.
-
-### Pedidos
-
--   `POST /pedidos`: Create a new order.
--   `GET /pedidos/:id`: Get a specific order by its ID.
-
-### Usuarios
-
--   `POST /usuarios`: Create a new user.
--   `GET /usuarios/:id`: Get a specific user by their ID.
--   `GET /usuarios/:id/pedidos`: Get the order history for a specific user.
+Osdague92
