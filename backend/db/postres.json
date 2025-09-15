@@ -1,0 +1,16 @@
+[
+  {
+    "id": 1,
+    "nombre": "Cheesecake de Fresa",
+    "imagen": "url_a_la_imagen",
+    "descripcion": "Delicioso cheesecake con mermelada de fresa casera.",
+    "precioBase": 150
+  },
+  {
+    "id": 2,
+    "nombre": "Torta de Chocolate",
+    "imagen": "url_a_la_imagen",
+    "descripcion": "Torta de chocolate intensa y esponjosa.",
+    "precioBase": 180
+  }
+]

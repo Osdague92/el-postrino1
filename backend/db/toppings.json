@@ -1,0 +1,20 @@
+[
+  {
+    "id": 1,
+    "nombre": "Chispas de Chocolate",
+    "imagen": "url_a_la_imagen",
+    "precioAdicional": 20
+  },
+  {
+    "id": 2,
+    "nombre": "Nueces",
+    "imagen": "url_a_la_imagen",
+    "precioAdicional": 25
+  },
+  {
+    "id": 3,
+    "nombre": "Salsa de Caramelo",
+    "imagen": "url_a_la_imagen",
+    "precioAdicional": 30
+  }
+]
